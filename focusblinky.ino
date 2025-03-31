@@ -1,11 +1,12 @@
 // Blinks the LED for DURATION slowly reducing the rate
 // Based on https://news.ycombinator.com/item?id=38276107
+// TODO: Verify that it works as intended on 1h timer lol
 // TODO: Macros to disable debug output
 //       OR
 // TODO: Print debug output on input
 // TODO: Overcomplicate rate settings
 
-const unsigned long HOUR = 3600000000;
+const unsigned long HOUR = 3600000;
 const unsigned long MINUTE = 60000;
 // Configuration:
 const unsigned long DURATION = HOUR;
@@ -24,13 +25,14 @@ void setup() {
 }
 
 void loop() {
-  // Serial.println("CYCLE");
-  // Serial.print("TTL "); Serial.println(ttl);
+  Serial.println("CYCLE");
   rate = START_BPM * (float)ttl / DURATION;
   if (rate < TARGET_BPM) { rate = TARGET_BPM; }
-  // Serial.print("BPM "); Serial.println(rate);
   sleep = MINUTE / rate;
-  // Serial.print("SLP "); Serial.println(sleep);
+  Serial.print("TTL "); Serial.println(ttl);
+  Serial.print("BPM "); Serial.println(rate);
+  Serial.print("SLP "); Serial.println(sleep);
+  Serial.println();
   pulse();
   if (ttl < sleep) { // Halt when TTL has run out
     Serial.print("STOP");
